@@ -64,5 +64,10 @@ public class StudentServiceDatabase implements StudentService
 		studentMapper.updateStudent(student);
     	
 	}
+	@Override
+	public List <CourseModel> selectAllCourse()
+	{
+		return studentMapper.selectAllCourse();
+	}
 
 }

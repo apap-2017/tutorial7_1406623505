@@ -51,6 +51,18 @@ public interface StudentMapper
     		})
     CourseModel selectAllStudentsByCourse(@Param("idCourse") String idCourse);
     
+    @Select("select id_course, name, credits from course")
+    @Results(value = {
+    		@Result(property="idCourse", column="id_course"),
+    		@Result(property="name", column="name"),
+    		@Result(property="credits", column="credits"),
+    		@Result(property="students", column="id_course",
+    		javaType = List.class,
+    		many=@Many(select="selectStudentByCourseHelper"))
+    		})
+    List <CourseModel> selectAllCourse();
+    
+    
     @Insert("INSERT INTO student (npm, name, gpa) VALUES (#{npm}, #{name}, #{gpa})")
     void addStudent (StudentModel student);
 
