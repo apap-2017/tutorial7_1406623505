@@ -1,0 +1,36 @@
+**port producer 9090
+**port consumer 9191
+
+1.
+
+@RequestMapping("/student/viewall")
+	public List <StudentModel> viewall () 
+	{
+		List <StudentModel> student = studentService.selectAllStudents();
+		return student;
+	}
+	
+PENJELASAN:	
+method ini memanggil method di service yang akan memanggil mapper. Mapper tersebut akan mengembalikan List dari semua student beeerta course yang diambil dan di return menuju service. Setelah itu dari service tersebut akan dikembalikan menuju controller ini. Controller ini akan mengembalikan list  dari seluruh student yang ada.	
+	
+2.
+
+@RequestMapping("/course/view/{idCourse}")
+	public CourseModel view (@PathVariable(value = "idCourse") String idCourse) 
+	{
+		CourseModel course = studentService.selectAllStudentsCourse(idCourse);
+		return course;
+	}
+	
+	@RequestMapping("/course/viewall")
+	public List <CourseModel> viewall () 
+	{
+		List <CourseModel> course = studentService.selectAllCourse();
+		return course;
+	}
+	
+method ini memanggil method di service yang akan memanggil mapper. Mapper tersebut akan mengembalikan List Course (untuk viewall) atau Course (untuk view by id) dari semua course beserta student yang mengambil dan di return menuju service. Setelah itu dari service tersebut akan dikembalikan menuju controller ini. Controller ini akan mengembalikan dari seluruh course atau course tertentu.	
+
+
+3.
+
