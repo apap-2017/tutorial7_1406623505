@@ -33,4 +33,29 @@ method ini memanggil method di service yang akan memanggil mapper. Mapper terseb
 
 
 3.
+Method pada StudentServiceRest:
+@Override
+	public List<StudentModel> selectAllStudents() {
+		// TODO Auto-generated method stub
+		return studentDAO.selectAllStudents();
+	}
+	
+PENJELASAN:
+Method ini akan memanggil service method selectAllStudents pada StudentDAOImpl dan akan mendapatkan List yang method ini akan kembalikan nilainya. Nilai tersebut dikembalikan
+kepada method controller yang memanggil untuk menampilkan data.
+	
+Method pada StudentDAOImpl	
+@Override
+	public List<StudentModel> selectAllStudents() {
+		List <StudentModel> students = restTemplate.getForObject("http://localhost:9090/rest/student/viewall",
+				List.class);
+
+		return students;
+	}
+
+PENJELASAN:
+Method ini akan mengambil data dari project/service lain untuk ditampilkan. Method ini tidak mengambil data dari db sendiri, tetapi mengambil data dari db yang port 9090.
+
+	
+
 
