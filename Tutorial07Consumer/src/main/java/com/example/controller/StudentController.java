@@ -79,11 +79,13 @@ public class StudentController
         }
     }
 
-    @RequestMapping("/student/course/view/{id}")
+    @RequestMapping("/course/view/{id}")
     public String viewCourse(Model model, @PathVariable(value = "id") String id)
     {
-        CourseModel course = studentDAO.selectAllStudentsCourse (id);
-        model.addAttribute ("course", course);
+        System.out.println("aaaaa");
+    	CourseModel course = studentDAO.selectAllStudentsCourse (id);
+        System.out.println("bbbbbbb");
+    	model.addAttribute ("course", course);
 
         return "course";
     }
@@ -141,6 +143,15 @@ public class StudentController
         studentDAO.updateStudent(x);
         
         return "success-update";
+    }
+    
+    @RequestMapping("/course/viewall")
+    public String viewAllCourse (Model model)
+    {
+        List<CourseModel> courses = studentDAO.selectAllCourse();
+        model.addAttribute ("courses", courses);
+
+        return "viewallcourse";
     }
     
 }

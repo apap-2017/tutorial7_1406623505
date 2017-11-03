@@ -44,7 +44,7 @@ PENJELASAN:
 Method ini akan memanggil service method selectAllStudents pada StudentDAOImpl dan akan mendapatkan List yang method ini akan kembalikan nilainya. Nilai tersebut dikembalikan
 kepada method controller yang memanggil untuk menampilkan data.
 	
-Method pada StudentDAOImpl	
+Method pada StudentDAOImpl:	
 @Override
 	public List<StudentModel> selectAllStudents() {
 		List <StudentModel> students = restTemplate.getForObject("http://localhost:9090/rest/student/viewall",
@@ -57,5 +57,63 @@ PENJELASAN:
 Method ini akan mengambil data dari project/service lain untuk ditampilkan. Method ini tidak mengambil data dari db sendiri, tetapi mengambil data dari db yang port 9090.
 
 	
+4.
+Method pada StudentController:
+@RequestMapping("/course/viewall")
+    public String viewAllCourse (Model model)
+    {
+        List<CourseModel> courses = studentDAO.selectAllCourse();
+        model.addAttribute ("courses", courses);
+
+        return "viewallcourse";
+    }
+Method ini seperti method controller biasa, akan memanggil service studentDAO untuk mendapatkan list courses. Method ini mengembalikan nama halaman yang dituju.
+
+Method pada StudentServiceRest:	
+@Override
+	public List<CourseModel> selectAllCourse() {
+		// TODO Auto-generated method stub
+		return courseDAO.selectAllCourse();
+	}
+
+Method ini akan memanggil CourseDAO untuk mendapatkan list yang diinginkan
 
 
+Method pada CourseDAOImpl	
+@Override
+	public CourseModel selectCourse(String idCourse) {
+		// TODO Auto-generated method stub
+		
+		CourseModel course = restTemplate.getForObject("http://localhost:9090/rest/course/view/" + idCourse,
+				CourseModel.class);
+		return course;
+	}
+
+	@Override
+	public List<CourseModel> selectAllCourse() {
+		// TODO Auto-generated method stub
+		List <CourseModel> courses = restTemplate.getForObject("http://localhost:9090/rest/course/viewall",
+				List.class);
+		
+		return courses;
+	}
+
+Class ini merupakan class baru yang berisi 2 method diatas. Yang pertama untuk memilih 1 course saja dari project pertama, sedangkan yang kedua untuk memilih seluruh course dari project pertama.
+
+
+LESSON LEARNED:
+- Menggunakan REST.
+- Mengambil data dari sistem yang berbeda.
+- Pemanfaat REST dapat digunakan untuk memberikan data menuju sistem yang berbeda.
+- Penggunaan REST dapat mengembalikan data dalam bentuk berupa JSON.
+- Perlu adanya atribut RestTemplate untuk menembak ke sistem lain.
+- Sistem yang diambil datanya cukup menyediakan JSON saja, sedangkan sistem yang menampilkan data cukup memiliki controller dan method yang memadai serta halaman htmlnya.
+- Terdapat anotasi primary untuk menjadikan sebuah service menjadi service utama.
+- Terdapat anotasi @RestController agar menjadikan controller tersebut mejadi controller dengan format Rest. 
+
+
+Penjelasan Latihan:
+Latihan 1: Melatih penulis untuk menggunakan Rest untuk mengirimkan data dalam bentuk JSON kepada pemanggil (Student viewAll)
+Latihan 2: Melatih Penulis untuk menggunakan Rest untuk mengirimkan data dalam bentuk JSON kepada pemanggil (Course view by id dan Course viewall)
+Latihan 3: Melatih penulis untuk dapat mengambil data dari sistem lain dan digunakan untuk sistem sendiri (Student viewAll)
+Latihan 4: Melatih penulis untuk dapat mengambil data dari sistem lain dan digunakan untuk sistem sendiri (Course viewAll dan course view by id)

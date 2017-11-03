@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>View All Students</title>
+        <div th:replace="fragments/view-title  :: CSS"></div>
+        <script src="/js/jquery-3.2.1.min.js"></script>
+	    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
+	  	
+		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+	    
+	    <script>
+	        $(document).ready(function () {
+	            $('#tabel-mhs').DataTable();
+	        });
+	        
+	        
+	    </script>
+    </head>
+    <body>
+        <div th:replace="fragments/view-title :: header"></div>
+        
+        
+        <table id="tabel-mhs" class="table">
+        
+        <thead>
+		        <tr>
+		            <th>No. </th>
+		            <th>IDCourse</th>
+		            <th>Name</th>
+		            <th>Credit</th>
+		           
+		        </tr>
+		    </thead>
+    	
+    	<tbody>
+    	<div th:each="course,iterationStatus: ${courses}">
+            <tr>
+            
+            <td><h3 th:text="'No. ' + ${iterationStatus.count}">No. 1</h3></td>
+	       	<td><h3 th:text="'ID Course = ' + ${course.idCourse}">Student NPM</h3></td>
+	       	<td><h3 th:text="'Name = ' + ${course.name}">Student Name</h3></td>
+	       	<td><h3 th:text="'Credit = ' + ${course.credits}">Student GPA</h3></td>
+	       	
+	       	</tr>
+       	</div>
+       	
+       	
+        </tbody>
+        </table>
+    </body>
+</html>
